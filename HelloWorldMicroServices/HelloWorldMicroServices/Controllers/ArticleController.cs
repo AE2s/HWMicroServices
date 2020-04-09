@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldMicroServices.Domain;
 using HelloWorldMicroServices.Domain.Commands;
+using HelloWorldMicroServices.Domain.Events;
 using HelloWorldMicroServices.Domain.Models;
 using HelloWorldMicroServices.Domain.Queries;
 using MediatR;
@@ -32,6 +33,7 @@ namespace HelloWorldMicroServices.Application.Controllers
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(_queryService);
+            _mediator.Publish(new QueryNotification());
             return Ok(result);
         }
 

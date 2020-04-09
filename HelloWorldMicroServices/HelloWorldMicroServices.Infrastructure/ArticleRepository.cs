@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using HelloWorldMicroServices.Domain;
 using HelloWorldMicroServices.Domain.Models;
 
@@ -32,9 +33,9 @@ namespace HelloWorldMicroServices.Infrastructure
                 }
             };
         }
-        public List<Article> GetArticles()
+        public async Task<List<Article>> GetArticles()
         {
-            return _articles;
+            return await Task.Run(() => _articles);
         }
 
         public void AddArticle(Article article)

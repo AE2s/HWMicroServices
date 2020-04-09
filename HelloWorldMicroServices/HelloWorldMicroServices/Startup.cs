@@ -1,5 +1,9 @@
+using System;
 using HelloWorldMicroServices.Domain;
+using HelloWorldMicroServices.Domain.Commands;
+using HelloWorldMicroServices.Domain.Queries;
 using HelloWorldMicroServices.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +47,11 @@ namespace HelloWorldMicroServices.Application
             services.AddSingleton<IArticleRepository, ArticleRepository>();
             services.AddScoped<ICommandService, CommandService>();
             services.AddScoped<IQueryService, QueryService>();
+
+            //services.AddMediatR(typeof(Startup));
+            //because is not in the same assembly
+            var assembly = AppDomain.CurrentDomain.Load("HelloWorldMicroServices.Domain");
+            services.AddMediatR(assembly);
 
         }
 

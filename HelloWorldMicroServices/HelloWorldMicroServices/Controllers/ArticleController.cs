@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldMicroServices.Domain;
+using HelloWorldMicroServices.Domain.Commands;
 using HelloWorldMicroServices.Domain.Models;
+using HelloWorldMicroServices.Domain.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,18 +18,21 @@ namespace HelloWorldMicroServices.Application.Controllers
     {
         private readonly ICommandService _commandService;
         private readonly IQueryService _queryService;
+        private readonly IMediator _mediator;
 
-        public ArticleController(ICommandService commandService, IQueryService queryService)
+        public ArticleController(ICommandService commandService, IQueryService queryService, IMediator mediator)
         {
             _commandService = commandService;
             _queryService = queryService;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [Route("items")]
-        public IEnumerable<Article> Get()
+        public async Task<IActionResult> Get()
         {
-            return _queryService.GetArticles();
+            var result = await _mediator.Send(_queryService);
+            return Ok(result);
         }
 
         [HttpPost]

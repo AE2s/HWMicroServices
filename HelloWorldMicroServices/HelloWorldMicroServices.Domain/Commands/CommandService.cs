@@ -1,6 +1,6 @@
 ﻿using HelloWorldMicroServices.Domain.Models;
 
-namespace HelloWorldMicroServices.Domain
+namespace HelloWorldMicroServices.Domain.Commands
 {
     public class CommandService : ICommandService
     {

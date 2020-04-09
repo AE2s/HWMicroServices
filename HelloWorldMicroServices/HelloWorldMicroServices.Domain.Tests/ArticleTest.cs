@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using HelloWorldMicroServices.Domain.Commands;
+using HelloWorldMicroServices.Domain.Handlers;
 using HelloWorldMicroServices.Domain.Models;
+using HelloWorldMicroServices.Domain.Queries;
 using NFluent;
 using NSubstitute;
 using Xunit;
@@ -13,15 +17,16 @@ namespace HelloWorldMicroServices.Domain.Tests
         {
             Article article = new Article { Title = "title", Description = "description" };
             IArticleRepository repository = Substitute.For<IArticleRepository>();
-            var expected = new List<Article> {article};
+            var expected = new List<Article> { article };
             repository.GetArticles().Returns(expected);
 
-            ICommandService commandService=new CommandService(repository);
+            ICommandService commandService = new CommandService(repository);
             commandService.Add(article);
-            IQueryService queryService = new QueryService(repository);
-            var articles = queryService.GetArticles();
+            QueryService queryService=new QueryService();
+            QueryServiceHandler queryServiceHandler = new QueryServiceHandler(repository);
+            var articles = queryServiceHandler.Handle(queryService,CancellationToken.None);
 
-            Check.That(articles).ContainsExactly(expected);
+            Check.That(articles.Result).ContainsExactly(expected);
 
         }
 

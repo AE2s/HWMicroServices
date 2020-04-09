@@ -1,3 +1,5 @@
+using HelloWorldMicroServices.Domain;
+using HelloWorldMicroServices.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +39,10 @@ namespace HelloWorldMicroServices.Application
                     Description = Configuration["Swagger:Description"]
                 });
             });
+
+            services.AddSingleton<IArticleRepository, ArticleRepository>();
+            services.AddScoped<ICommandService, CommandService>();
+            services.AddScoped<IQueryService, QueryService>();
 
         }
 

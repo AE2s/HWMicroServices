@@ -8,6 +8,7 @@ using HelloWorldMicroServices.Domain.Events;
 using HelloWorldMicroServices.Domain.Models;
 using HelloWorldMicroServices.Domain.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace HelloWorldMicroServices.Application.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+   
     public class ArticleController : ControllerBase
     {
         private readonly ICommandService _commandService;

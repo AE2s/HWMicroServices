@@ -28,6 +28,10 @@ namespace HelloWorldMicroServices.Infrastructure
                     Tags = new List<Tag>(){new Tag
                         {
                             Name = "framework"
+                        },
+                        new Tag()
+                        {
+                            Name = "JS"
                         }
                     }
                 }
@@ -54,6 +58,8 @@ namespace HelloWorldMicroServices.Infrastructure
             if (articleToUpdate != null)
             {
                 articleToUpdate.Description = article.Description;
+                articleToUpdate.Author.FirstName = article.Author.FirstName;
+                articleToUpdate.Tags = article.Tags;
             }
             
         }

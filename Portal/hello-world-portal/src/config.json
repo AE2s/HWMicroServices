@@ -1,0 +1,7 @@
+{
+  "services": {
+    "article": {
+      "url": "http://localhost:60793"
+    }
+  }
+}
